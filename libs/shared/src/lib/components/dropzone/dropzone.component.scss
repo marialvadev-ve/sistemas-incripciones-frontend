@@ -1,0 +1,94 @@
+.dropzone-container {
+  border: 2px dashed rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  padding: 24px;
+  text-align: center;
+  background-color: #fafafa;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+
+  &:hover,
+  &.dragging {
+    border-color: var(--primary-color, #3f51b5);
+    background-color: rgba(63, 81, 181, 0.04);
+  }
+}
+
+.hidden-input {
+  display: none;
+}
+
+.dropzone-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.dropzone-icon {
+  font-size: 48px;
+  width: 48px;
+  height: 48px;
+  color: var(--primary-color, #3f51b5);
+}
+
+.dropzone-text {
+  font-weight: 500;
+  color: rgba(0, 0, 0, 0.87);
+  margin: 0;
+}
+
+.dropzone-hint {
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.54);
+  margin: 0;
+}
+
+.error-message {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin-top: 12px;
+  color: #f44336;
+  font-size: 13px;
+
+  mat-icon {
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+  }
+}
+
+.file-list {
+  margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.file-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #ffffff;
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+
+  .file-icon {
+    color: var(--primary-color, #3f51b5);
+    margin-right: 8px;
+  }
+
+  .file-name {
+    flex: 1;
+    text-align: left;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 14px;
+    color: rgba(0, 0, 0, 0.87);
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "name": "expediente",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/expediente/src",
+  "prefix": "lib",
+  "projectType": "library",
+  "tags": ["domain:expediente"],
+  "targets": {
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "libs/expediente/jest.config.cts",
+        "tsConfig": "libs/expediente/tsconfig.spec.json"
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    }
+  }
+}

@@ -1,0 +1,18 @@
+<button
+  mat-flat-button
+  [type]="type()"
+  [disabled]="disabled() || loading()"
+  [class]="customClass()"
+  (click)="clicked.emit($event)"
+  class="tenant-button"
+>
+  @if (loading()) {
+    <mat-spinner diameter="20" class="spinner"></mat-spinner>
+  }
+
+  @if (!loading()) {
+    <span>
+      <ng-content></ng-content>
+    </span>
+  }
+</button>

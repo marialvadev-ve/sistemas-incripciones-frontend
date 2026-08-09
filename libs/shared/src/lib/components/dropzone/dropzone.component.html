@@ -1,0 +1,66 @@
+<div
+  class="dropzone-container"
+  [class.dragging]="isDragging()"
+  tabindex="0"
+  role="button"
+  aria-label="Zona para arrastrar y soltar archivos"
+  (dragover)="onDragOver($event)"
+  (dragleave)="onDragLeave($event)"
+  (drop)="onDrop($event)"
+  (click)="fileInput.click()"
+  (keydown.enter)="fileInput.click()"
+  (keydown.space)="fileInput.click(); $event.preventDefault()"
+>
+  <!-- 
+    ========================================================================
+    ATRIBUTO DE CAPTURA MÓVIL (CÁMARA):
+    [attr.capture] se activa dinámicamente si el input [enableCapture] es true.
+    Si genera inconvenientes en algún dispositivo, basta con remover 
+    la línea [attr.capture] de este input sin afectar el resto del componente.
+    ========================================================================
+  -->
+  <input
+    #fileInput
+    type="file"
+    class="hidden-input"
+    [accept]="acceptedFormats()"
+    [multiple]="multiple()"
+    [attr.capture]="enableCapture() ? 'environment' : null"
+    (change)="onFileSelected($event)"
+  />
+
+  <div class="dropzone-content">
+    <mat-icon class="dropzone-icon">cloud_upload</mat-icon>
+    <p class="dropzone-text">{{ label() }}</p>
+    <p class="dropzone-hint">Formatos permitidos: {{ acceptedFormats() }} (Máx. {{ maxSizeMb() }}MB)</p>
+  </div>
+
+  @if (errorMessage()) {
+    <div class="error-message">
+      <mat-icon>error_outline</mat-icon>
+      <span>{{ errorMessage() }}</span>
+    </div>
+  }
+
+  @if (selectedFiles().length > 0) {
+    <div
+      class="file-list"
+      role="region"
+      aria-label="Lista de archivos seleccionados"
+      tabindex="-1"
+      (click)="$event.stopPropagation()"
+      (keydown.enter)="$event.stopPropagation()"
+      (keydown.space)="$event.stopPropagation()"
+    >
+      @for (file of selectedFiles(); track file.name) {
+        <div class="file-item">
+          <mat-icon class="file-icon">insert_drive_file</mat-icon>
+          <span class="file-name" [matTooltip]="file.name">{{ file.name }}</span>
+          <button mat-icon-button color="warn" (click)="removeFile($index, $event)" matTooltip="Eliminar archivo">
+            <mat-icon>close</mat-icon>
+          </button>
+        </div>
+      }
+    </div>
+  }
+</div>

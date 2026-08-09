@@ -1,0 +1,9 @@
+npm test
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+# 1. Pasa el formateo (Prettier) y el linter (ESLint) solo a los archivos modificados
+npx lint-staged
+
+# 2. Verifica que el compilador de TypeScript no detecte errores en el proyecto
+npx tsc --noEmit

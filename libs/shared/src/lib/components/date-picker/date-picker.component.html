@@ -1,0 +1,26 @@
+<div class="DatePicker-container">
+  <mat-form-field class="DatePicker w-full" [class.onClassErrorInput]="onClassErrorInput()" [appearance]="appearance()">
+    <mat-label>{{ label() }}</mat-label>
+
+    <input
+      matInput
+      [matDatepicker]="picker"
+      [matTooltip]="toolTipValue()"
+      [value]="value()"
+      [disabled]="isDisabled()"
+      [min]="minDate()"
+      [max]="maxDate()"
+      [placeholder]="placeholder()"
+      autocomplete="off"
+      (dateChange)="onDateChange($event)"
+      (blur)="onBlur()"
+    />
+
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+
+    @if (hintText()) {
+      <mat-hint>{{ hintText() }}</mat-hint>
+    }
+  </mat-form-field>
+</div>

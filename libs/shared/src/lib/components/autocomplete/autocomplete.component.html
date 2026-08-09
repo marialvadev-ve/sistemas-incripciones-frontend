@@ -1,0 +1,68 @@
+<div class="Autocomplete-container">
+  <mat-form-field class="w-full" appearance="outline">
+    <mat-label>{{ label() }}</mat-label>
+
+    <input
+      matInput
+      type="text"
+      [formControl]="searchControl"
+      [matAutocomplete]="auto"
+      [placeholder]="placeholder()"
+      [matTooltip]="toolTipValue()"
+      [readonly]="isDisabled()"
+      (keyup)="onInputKeyup($event)"
+    />
+
+    <!-- Botón CRUD Opcional: Agregar nuevo (emite evento al padre) -->
+    @if (showAddButton() && !isDisabled()) {
+      <mat-icon
+        matSuffix
+        class="cursor-pointer icon-action ml-1"
+        (click)="addNew.emit()"
+        matTooltip="Agregar nuevo elemento"
+      >
+        add_circle_outline
+      </mat-icon>
+    }
+
+    <!-- Botón CRUD Opcional: Editar seleccionado (emite evento al padre) -->
+    @if (showEditButton() && selectedItem() && !isDisabled()) {
+      <mat-icon
+        matSuffix
+        class="cursor-pointer icon-action ml-1"
+        (click)="editItem.emit(selectedItem()!)"
+        matTooltip="Editar elemento seleccionado"
+      >
+        edit
+      </mat-icon>
+    }
+
+    <!-- Botón de limpiar valor si existe selección -->
+    @if (selectedItem() && !isDisabled()) {
+      <mat-icon matSuffix class="cursor-pointer icon-action" (click)="clearSelection($event)" matTooltip="Limpiar">
+        close
+      </mat-icon>
+    }
+
+    <!-- Icono indicador de búsqueda o estado de carga -->
+    <mat-icon matSuffix class="icon-action">
+      @if (isLoading()) {
+        hourglass_empty
+      } @else {
+        search
+      }
+    </mat-icon>
+
+    <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn" (optionSelected)="onOptionSelected($event)">
+      @for (option of options(); track option.id) {
+        <mat-option [value]="option">
+          {{ option.nombre }}
+        </mat-option>
+      } @empty {
+        <mat-option disabled>
+          {{ isLoading() ? 'Buscando...' : 'No se encontraron resultados' }}
+        </mat-option>
+      }
+    </mat-autocomplete>
+  </mat-form-field>
+</div>

@@ -1,0 +1,87 @@
+{
+  "name": "sistema-inscripciones-frontend",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "prefix": "app",
+  "sourceRoot": "apps/sistema-inscripciones-frontend/src",
+  "tags": ["type:app"],
+  "targets": {
+    "build": {
+      "executor": "@angular/build:application",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "outputPath": "dist/apps/sistema-inscripciones-frontend",
+        "browser": "apps/sistema-inscripciones-frontend/src/main.ts",
+        "tsConfig": "apps/sistema-inscripciones-frontend/tsconfig.app.json",
+        "inlineStyleLanguage": "scss",
+        "assets": [
+          {
+            "glob": "**/*",
+            "input": "apps/sistema-inscripciones-frontend/public"
+          }
+        ],
+        "styles": ["apps/sistema-inscripciones-frontend/src/styles.scss"],
+        "server": "apps/sistema-inscripciones-frontend/src/main.server.ts",
+        "ssr": {
+          "entry": "apps/sistema-inscripciones-frontend/src/server.ts"
+        },
+        "outputMode": "server"
+      },
+      "configurations": {
+        "production": {
+          "budgets": [
+            {
+              "type": "initial",
+              "maximumWarning": "500kb",
+              "maximumError": "1mb"
+            },
+            {
+              "type": "anyComponentStyle",
+              "maximumWarning": "4kb",
+              "maximumError": "8kb"
+            }
+          ],
+          "outputHashing": "all"
+        },
+        "development": {
+          "optimization": false,
+          "extractLicenses": false,
+          "sourceMap": true
+        }
+      }
+    },
+    "serve": {
+      "continuous": true,
+      "executor": "@angular/build:dev-server",
+      "defaultConfiguration": "development",
+      "configurations": {
+        "production": {
+          "buildTarget": "sistema-inscripciones-frontend:build:production"
+        },
+        "development": {
+          "buildTarget": "sistema-inscripciones-frontend:build:development"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    },
+    "test": {
+      "executor": "@angular/build:unit-test",
+      "options": {
+        "watch": false
+      }
+    },
+    "serve-static": {
+      "continuous": true,
+      "executor": "@nx/web:file-server",
+      "options": {
+        "buildTarget": "sistema-inscripciones-frontend:build",
+        "port": 4200,
+        "staticFilePath": "dist/apps/sistema-inscripciones-frontend/browser",
+        "spa": true
+      }
+    }
+  }
+}

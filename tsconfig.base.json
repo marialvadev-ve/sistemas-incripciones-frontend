@@ -1,0 +1,25 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "rootDir": ".",
+    "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "bundler",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "target": "es2015",
+    "module": "esnext",
+    "lib": ["es2020", "dom"],
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": true,
+    "strict": false,
+    "paths": {
+      "@sistema-inscripciones-frontend/shared": ["./libs/shared/src/index.ts"],
+      "@sistema-inscripciones-frontend/auth": ["./libs/auth/src/index.ts"],
+      "@sistema-inscripciones-frontend/expediente": ["./libs/expediente/src/index.ts"],
+      "@sistema-inscripciones-frontend/backoffice": ["./libs/backoffice/src/index.ts"]
+    }
+  },
+  "exclude": ["node_modules", "tmp"]
+}

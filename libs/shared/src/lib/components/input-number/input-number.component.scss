@@ -1,0 +1,17 @@
+.w-full {
+  width: 100%;
+}
+
+.mat-mdc-form-field {
+  width: 100%;
+}
+
+.InputNumber-input {
+  &.right {
+    text-align: right;
+  }
+}
+
+.onClassErrorInput {
+  // Estilo reactivo o borde de error personalizado si el tenant lo requiere
+}
