@@ -15,6 +15,9 @@
         "browser": "apps/sistema-inscripciones-frontend/src/main.ts",
         "tsConfig": "apps/sistema-inscripciones-frontend/tsconfig.app.json",
         "inlineStyleLanguage": "scss",
+        "stylePreprocessorOptions": {
+          "includePaths": ["libs/shared/src/lib"]
+        },
         "assets": [
           {
             "glob": "**/*",

@@ -1,4 +1,5 @@
 import { Route } from '@angular/router';
+import { NotFoundComponent } from '@sistema-inscripciones-frontend/shared';
 
 export const appRoutes: Route[] = [
   {
@@ -17,5 +18,9 @@ export const appRoutes: Route[] = [
   {
     path: 'backoffice',
     loadChildren: () => import('@sistema-inscripciones-frontend/backoffice').then((m) => m.backofficeRoutes),
+  },
+  {
+    path: '**',
+    component: NotFoundComponent, // O redirigir a una ruta de error 404 personalizada
   },
 ];

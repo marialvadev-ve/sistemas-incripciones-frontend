@@ -1,0 +1,9 @@
+.field-error-text {
+  font-size: 0.75rem;
+  color: #dc2626;
+  margin-top: -6px; // 👈 Acerca el texto al borde inferior del input
+  margin-bottom: 12px; // 👈 Separa elegantemente el error del siguiente input (contraseña)
+  display: block;
+  font-weight: 500;
+  animation: fadeIn 0.2s ease-in-out;
+}

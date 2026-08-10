@@ -1,0 +1,42 @@
+/* ===================================================================
+   Estilos Globales para Snackbars Institucionales (Overlay)
+   =================================================================== */
+.mat-mdc-snack-bar-container {
+  &.snackbar-error {
+    --mdc-snackbar-container-color: #0f172a;
+
+    /* Forzamos el color del texto de error en la etiqueta interna */
+    .mdc-snackbar__label {
+      color: #f87171 !important;
+    }
+
+    /* Forzamos el color del botón de acción (Cerrar) a blanco */
+    .mat-mdc-button {
+      color: #ffffff !important;
+    }
+  }
+
+  &.snackbar-success {
+    --mdc-snackbar-container-color: #0f172a;
+
+    .mdc-snackbar__label {
+      color: #4ade80 !important;
+    }
+
+    .mat-mdc-button {
+      color: #ffffff !important;
+    }
+  }
+
+  &.snackbar-info {
+    --mdc-snackbar-container-color: #0f172a;
+
+    .mdc-snackbar__label {
+      color: #60a5fa !important;
+    }
+
+    .mat-mdc-button {
+      color: #ffffff !important;
+    }
+  }
+}

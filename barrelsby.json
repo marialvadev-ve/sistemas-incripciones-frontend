@@ -1,0 +1,17 @@
+{
+  "directory": [
+    "libs/shared/src/lib/models/geographic",
+    "libs/shared/src/lib/models/auth",
+    "libs/shared/src/lib/models/persona",
+    "libs/shared/src/lib/models/university",
+    "libs/shared/src/lib/models/student",
+    "libs/shared/src/lib/models/academic",
+    "libs/shared/src/lib/models/admission",
+    "libs/shared/src/lib/models/common"
+  ],
+  "include": ["*.ts"],
+  "exclude": ["index.ts"],
+  "local": true,
+  "structure": "flat",
+  "singleQuotes": true
+}

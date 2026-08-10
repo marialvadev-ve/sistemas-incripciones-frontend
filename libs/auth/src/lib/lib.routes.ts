@@ -1,4 +1,19 @@
-import { Route } from '@angular/router';
-import { Auth } from './auth/auth';
+import { Routes } from '@angular/router';
+import { LoginComponent } from './pages/login/login';
+import { RecoverPassword } from './pages/recover-password/recover-password';
 
-export const authRoutes: Route[] = [{ path: '', component: Auth }];
+export const authRoutes: Routes = [
+  {
+    path: 'login',
+    component: LoginComponent,
+  },
+  {
+    path: 'recover-password',
+    component: RecoverPassword,
+  },
+  {
+    path: '',
+    redirectTo: 'login',
+    pathMatch: 'full',
+  },
+];

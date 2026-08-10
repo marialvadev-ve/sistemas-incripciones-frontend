@@ -1,0 +1,39 @@
+export enum Genero {
+  MASCULINO = 'MASCULINO',
+  FEMENINO = 'FEMENINO',
+}
+
+export enum EstadoCivil {
+  SOLTERO = 'SOLTERO',
+  CASADO = 'CASADO',
+  DIVORCIADO = 'DIVORCIADO',
+  VIUDO = 'VIUDO',
+  UNION_LIBRE = 'UNION_LIBRE',
+}
+
+export enum TipoVivienda {
+  RESIDENCIADO = 'RESIDENCIADO',
+  VIVIENDA_PROPIA = 'VIVIENDA_PROPIA',
+}
+
+export enum EstadoSolicitud {
+  PENDIENTE = 'PENDIENTE',
+  EN_REVISION = 'EN_REVISION',
+  CONFIRMADA = 'CONFIRMADA',
+  RECHAZADA = 'RECHAZADA',
+  ANULADA = 'ANULADA',
+}
+
+export enum EstadoDocumento {
+  PENDIENTE = 'PENDIENTE',
+  SUBIDO = 'SUBIDO',
+  APROBADO = 'APROBADO',
+  RECHAZADO = 'RECHAZADO',
+}
+
+export enum TipoLapso {
+  PREGRADO = 'PREGRADO',
+  POSTGRADO = 'POSTGRADO',
+  INTENSIVO = 'INTENSIVO',
+  ESPECIAL = 'ESPECIAL',
+}

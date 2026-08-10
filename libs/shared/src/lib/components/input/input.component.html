@@ -1,13 +1,27 @@
-<mat-form-field appearance="outline" class="w-full">
+<mat-form-field appearance="outline" class="w-full" subscriptSizing="dynamic">
   <mat-label>{{ label() }}</mat-label>
   <input
     matInput
-    [type]="type()"
+    [type]="inputType()"
     [placeholder]="placeholder()"
     [value]="value()"
     [disabled]="isDisabled()"
     [readonly]="readonly()"
-    (input)="onInput($event)"
-    (blur)="onBlur()"
+    (input)="onValueChange($event)"
+    (change)="onValueChange($event)"
+    (blur)="onValueChange($event)"
   />
+
+  @if (type() === 'password') {
+    <button
+      mat-icon-button
+      matSuffix
+      type="button"
+      (click)="togglePasswordVisibility()"
+      [attr.aria-label]="'Ocultar/Mostrar contraseña'"
+      [attr.aria-pressed]="!hidePassword()"
+    >
+      <mat-icon>{{ hidePassword() ? 'visibility_off' : 'visibility' }}</mat-icon>
+    </button>
+  }
 </mat-form-field>

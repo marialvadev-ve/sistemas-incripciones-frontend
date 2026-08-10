@@ -1,0 +1,63 @@
+<div class="auth-wrapper">
+  <!-- Columna Izquierda: Panel Institucional Inmersivo -->
+  <div class="institutional-panel">
+    <div class="institutional-content">
+      <div class="brand-badge">
+        <mat-icon class="brand-icon">school</mat-icon>
+        <span>Portal Académico Unificado</span>
+      </div>
+      <h1>Excelencia e Innovación Educativa</h1>
+      <p>
+        Sistema de gestión multi-universidad de alta concurrencia para aspirantes, estudiantes y personal
+        administrativo.
+      </p>
+
+      <!-- Elemento gráfico minimalista moderno -->
+      <div class="geometric-art">
+        <div class="orbit orbit-1"></div>
+        <div class="orbit orbit-2"></div>
+        <div class="institutional-seal-card">
+          <mat-icon class="seal-icon">verified_user</mat-icon>
+          <span>Acceso Seguro Institucional</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Columna Derecha: Formulario de Acceso Minimalista -->
+  <div class="form-panel">
+    <div class="form-container">
+      <div class="form-header">
+        <h2>Bienvenido de nuevo</h2>
+        <p>Ingresa tus credenciales institucionales para continuar</p>
+      </div>
+
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="auth-form">
+        <lib-input
+          formControlName="email"
+          label="Correo Electrónico"
+          type="email"
+          placeholder="usuario@universidad.edu.ve"
+        >
+        </lib-input>
+        <lib-form-error [control]="loginForm.get('email')"></lib-form-error>
+
+        <lib-input formControlName="password" label="Contraseña" type="password" placeholder="••••••••"> </lib-input>
+        <lib-form-error [control]="loginForm.get('password')"></lib-form-error>
+        <div class="form-actions-row">
+          <a routerLink="/auth/recover" class="forgot-link">¿Olvidaste tu contraseña?</a>
+        </div>
+
+        <!-- Tu componente lib-button ya maneja perfectamente el estado de carga con isLoading() -->
+        <lib-button type="submit" [loading]="isLoading()" [disabled]="loginForm.invalid" customClass="w-full-btn">
+          Iniciar Sesión
+        </lib-button>
+      </form>
+
+      <div class="form-footer">
+        <span>¿No tienes una cuenta de aspirante?</span>
+        <a routerLink="/auth/register" class="register-link">Regístrate aquí</a>
+      </div>
+    </div>
+  </div>
+</div>

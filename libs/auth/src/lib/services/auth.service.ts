@@ -2,23 +2,8 @@ import { Injectable, inject } from '@angular/core';
 import { Observable, tap } from 'rxjs';
 import { ApiService } from '@sistema-inscripciones-frontend/shared';
 import { ApiResponse } from '@sistema-inscripciones-frontend/shared';
-
-export interface LoginCredentials {
-  email: string;
-  password: string;
-  universidadId?: string;
-}
-
-export interface AuthDataResponse {
-  access_token: string;
-  refresh_token: string; // <-- Añadimos el token de refresco
-  usuario: {
-    id: string;
-    email: string;
-    roles: string[];
-    universidadesIds: string[];
-  };
-}
+import { LoginCredentials } from '../models/auth/auth-credentials.model';
+import { AuthDataResponse } from '../models/auth/auth-response.model';
 
 @Injectable({
   providedIn: 'root',

@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { ApiResponse } from '../../models/api-response.interface';
+import { ApiResponse } from '../../models/api/api-response.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -11,8 +11,8 @@ export class ApiService {
 
   // Solución limpia con tipado seguro para evitar errores de compilación
   private readonly baseUrl =
-    (import.meta as unknown as Record<string, Record<string, string>>)['env']?.['VITE_API_URL'] ||
-    'http://localhost:3000/api';
+    (import.meta as unknown as { env: Record<string, string | undefined> }).env['VITE_API_URL'] ||
+    'http://localhost:3000/api/api';
 
   public get<T>(endpoint: string, params?: Record<string, string | number | boolean>): Observable<ApiResponse<T>> {
     let httpParams = new HttpParams();
