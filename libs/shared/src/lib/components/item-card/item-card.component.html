@@ -1,0 +1,32 @@
+<div
+  class="responsive-card"
+  (dblclick)="rowDblClick.emit(item)"
+  tabindex="0"
+  role="region"
+  aria-label="Detalle del registro"
+>
+  <!-- Avatar Circular y Siglas (Con soporte de accesibilidad a11y) -->
+  <div
+    class="card-left"
+    tabindex="0"
+    role="button"
+    aria-label="Eliminar registro"
+    (click)="onDelete($event)"
+    (keyup.enter)="onDelete($event)"
+  >
+    <div class="circle-avatar" [style.background-color]="getAvatarColor()">
+      {{ getSiglas() }}
+    </div>
+    <span class="card-siglas">{{ getDisplaySiglas() }}</span>
+  </div>
+
+  <!-- Información Detallada Dinámica -->
+  <div class="card-right">
+    <h3 class="card-title">{{ getNombreCard() }}</h3>
+    @for (col of columns.slice(1); track col.key) {
+      <div class="card-detail">
+        <span class="detail-label">{{ col.label }}:</span> {{ formatCell(col) }}
+      </div>
+    }
+  </div>
+</div>

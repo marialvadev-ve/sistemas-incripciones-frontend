@@ -1,0 +1,29 @@
+<div class="split-container" (mousemove)="onResize($event)" (mouseup)="stopResizing()">
+  <!-- PANEL IZQUIERDO: Tabla Reutilizable (Mayor espacio, con scroll interno propio) -->
+  <div class="split-pane left-pane" [style.width.%]="leftPanelWidth()">
+    <lib-data-table-layout
+      title="Gestión de Universidades"
+      [columns]="columnas"
+      [data]="universidades()"
+      [totalRecords]="universidades().length"
+      [currentPage]="currentPage()"
+      (searchChange)="onSearch($event)"
+      (createAction)="irCrear()"
+      (editAction)="editarUniversidad($event)"
+      (deleteAction)="eliminarUniversidad($event)"
+      (rowDblClick)="editarUniversidad($event)"
+    />
+  </div>
+
+  <!-- DIVISOR REDIMENSIONABLE -->
+  <div class="resizer" (mousedown)="startResizing($event)">
+    <div class="resizer-line"></div>
+  </div>
+
+  <!-- PANEL DERECHO: Formulario de Creación / Edición (Con scroll propio y router-outlet) -->
+  <div class="split-pane right-pane" [style.width.%]="100 - leftPanelWidth()">
+    <div class="form-wrapper-scroll">
+      <router-outlet />
+    </div>
+  </div>
+</div>

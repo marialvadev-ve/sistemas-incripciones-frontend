@@ -1,0 +1,16 @@
+/* Reset global recomendado para evitar desbordamientos y márgenes por defecto */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden; /* Vital para que tu split-container no genere scroll global */
+}

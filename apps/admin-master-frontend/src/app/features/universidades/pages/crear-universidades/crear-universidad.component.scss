@@ -1,0 +1,117 @@
+.form-card-container {
+  position: relative;
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 2.5rem 2rem 2rem 2rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+  max-width: 520px;
+  width: 100%;
+  box-sizing: border-box;
+
+  /* Botón de cierre elegante y bien ubicado en la esquina superior derecha */
+  .btn-close-form {
+    position: absolute;
+    top: 1.25rem;
+    right: 1.25rem;
+    background: #f3f4f6;
+    border: none;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.95rem;
+    color: #4b5563;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    z-index: 10;
+
+    &:hover {
+      background-color: #e5e7eb;
+      color: #1f2937;
+      transform: scale(1.05);
+    }
+  }
+
+  .form-header {
+    text-align: center;
+    margin-bottom: 2rem;
+    padding: 0 2rem; // Protege el espacio lateral para que el título no toque el botón
+
+    h2 {
+      font-size: 1.5rem;
+      color: #1f2937;
+      font-weight: 700;
+      margin-bottom: 0.4rem;
+    }
+
+    .form-subtitle {
+      font-size: 0.9rem;
+      color: #6b7280;
+    }
+  }
+
+  .institutional-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+
+      label {
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: #374151;
+      }
+
+      .form-input {
+        width: 100%;
+        padding: 0.75rem 1rem;
+        border: 1px solid #d1d5db;
+        border-radius: 8px;
+        font-size: 0.92rem;
+        color: #1f2937;
+        outline: none;
+        box-sizing: border-box;
+        transition:
+          border-color 0.2s,
+          box-shadow 0.2s;
+
+        &:focus {
+          border-color: #2563eb;
+          box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        &::placeholder {
+          color: #9ca3af;
+        }
+      }
+    }
+
+    .btn-submit {
+      margin-top: 1rem;
+      background-color: #2563eb;
+      color: white;
+      border: none;
+      padding: 0.8rem;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: background-color 0.2s;
+
+      &:hover:not(:disabled) {
+        background-color: #1d4ed8;
+      }
+
+      &:disabled {
+        background-color: #93c5fd;
+        cursor: not-allowed;
+      }
+    }
+  }
+}

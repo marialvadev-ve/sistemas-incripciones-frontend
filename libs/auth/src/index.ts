@@ -26,3 +26,7 @@ export * from './lib/pages/recover-password/recover-password';
 /*** SERVICES ***/
 export * from './lib/services/auth.service';
 export * from './lib/store/auth.store';
+
+/*** GUARDS */
+
+export * from './lib/guards/auth-guard';

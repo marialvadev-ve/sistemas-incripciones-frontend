@@ -19,3 +19,6 @@ export * from './lib/components/date-picker/date-picker.component';
 export * from './lib/components/autocomplete/autocomplete.component';
 export * from './lib/components/not-found/not-found';
 export * from './lib/components/form-error/form-error.component';
+export * from './lib/components/data-table-layout/data-table-layout.component';
+export * from './lib/components/item-card/item-card.component';
+export * from './lib/components/item-card-list-layout/item-card-list-layout.component';

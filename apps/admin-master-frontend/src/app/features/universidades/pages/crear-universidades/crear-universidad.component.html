@@ -1,0 +1,52 @@
+<div class="form-card-container">
+  <!-- Botón de Cerrar con Icono Minimalista (X) -->
+  <button class="btn-close-form" (click)="cerrarFormulario()" title="Cerrar formulario">✕</button>
+
+  <!-- Cabecera del Formulario -->
+  <div class="form-header">
+    <h2>Aprovisionamiento de Universidad</h2>
+    <p class="form-subtitle">Paso 1 de 2: Datos Institucionales</p>
+  </div>
+
+  <!-- Formulario Reactivo -->
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="institutional-form">
+    <div class="form-group">
+      <label for="nombre">Nombre de la Universidad</label>
+      <input
+        id="nombre"
+        type="text"
+        formControlName="nombre"
+        placeholder="Ej. Universidad Politécnica"
+        class="form-input"
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="siglas">Siglas</label>
+      <input id="siglas" type="text" formControlName="siglas" placeholder="Ej. UPT" class="form-input" />
+    </div>
+
+    <div class="form-group">
+      <label for="ubicacion">Ubicación (Opcional)</label>
+      <input id="ubicacion" type="text" formControlName="ubicacion" placeholder="Ciudad / Estado" class="form-input" />
+    </div>
+
+    <div class="form-group">
+      <label for="telefono">Teléfono (Opcional)</label>
+      <input id="telefono" type="text" formControlName="telefono" placeholder="0251-XXXXXXX" class="form-input" />
+    </div>
+
+    <div class="form-group">
+      <label for="correo">Correo Institucional (Opcional)</label>
+      <input
+        id="correo"
+        type="email"
+        formControlName="correoInstitucional"
+        placeholder="contacto@universidad.edu.ve"
+        class="form-input"
+      />
+    </div>
+
+    <button type="submit" class="btn-submit" [disabled]="form.invalid">Siguiente</button>
+  </form>
+</div>

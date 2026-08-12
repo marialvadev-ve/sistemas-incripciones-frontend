@@ -1,0 +1,72 @@
+<div class="management-container">
+  <!-- Cabecera con Título y Botón de Creación (+) -->
+  <div class="header-section">
+    <h2>{{ title }}</h2>
+    <button class="btn-create" (click)="createAction.emit()" title="Crear nuevo registro">
+      <span class="plus-icon">+</span> Nuevo Registro
+    </button>
+  </div>
+
+  <!-- Barra de Filtro de Búsqueda y Controles -->
+  <div class="controls-bar">
+    <div class="search-box">
+      <input type="text" [formControl]="searchControl" placeholder="Filtro de búsqueda..." class="search-input" />
+      <span class="search-icon">🔍</span>
+    </div>
+    <div class="pagination-info">Mostrando registros (Total: {{ totalRecords }})</div>
+  </div>
+
+  <!-- VISTA DE ESCRITORIO: Tabla Dinámica con Scroll Virtualizado Interno -->
+  <div class="table-scroll-container">
+    <table class="modern-table">
+      <thead>
+        <tr>
+          @for (col of columns; track col.key) {
+            <th>{{ col.label }}</th>
+          }
+          <th class="actions-col">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (row of data; track row['id'] || row) {
+          <tr (dblclick)="rowDblClick.emit(row)">
+            @for (col of columns; track col.key) {
+              <td>{{ formatCell(col, row) }}</td>
+            }
+            <td class="actions-cell">
+              <button class="action-btn edit" (click)="onEdit(row, $event)" title="Editar">✏️</button>
+              <button
+                class="action-btn delete"
+                (click)="deleteAction.emit(row); $event.stopPropagation()"
+                title="Eliminar"
+              >
+                🗑️
+              </button>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+
+  <!-- VISTA MÓVIL Y TABLET: Cards Adaptativas -->
+  <div class="cards-responsive-container">
+    @for (row of data; track row['id'] || row) {
+      <lib-item-card
+        [item]="row"
+        [columns]="columns"
+        (delete)="deleteAction.emit($event)"
+        (rowDblClick)="rowDblClick.emit($event)"
+      />
+    } @empty {
+      <div class="empty-state">No se encontraron registros disponibles.</div>
+    }
+  </div>
+
+  <!-- Paginación Inferior -->
+  <div class="pagination-footer">
+    <button class="page-btn" (click)="cambiarPagina(currentPage - 1)" [disabled]="currentPage === 1">Anterior</button>
+    <span class="page-indicator">Página {{ currentPage }}</span>
+    <button class="page-btn" (click)="cambiarPagina(currentPage + 1)">Siguiente</button>
+  </div>
+</div>

@@ -1,0 +1,57 @@
+<div class="card-list-container" [class.disabled-container]="isLoading">
+  <!-- Overlay con Spinner y Bloqueo de Interacción mientras el endpoint se ejecuta -->
+  @if (isLoading) {
+    <div class="loading-overlay">
+      <div class="spinner"></div>
+      <span>Actualizando registros...</span>
+    </div>
+  }
+
+  <!-- Cabecera con Título y Botón de Creación (+) -->
+  <div class="header-section">
+    <h2>{{ title }}</h2>
+    <button class="btn-create" (click)="createAction.emit()" [disabled]="isLoading" title="Crear nuevo registro">
+      <span class="plus-icon">+</span> Nuevo
+    </button>
+  </div>
+
+  <!-- Barra de Filtro de Búsqueda y Controles -->
+  <div class="controls-bar">
+    <div class="search-box">
+      <input
+        type="text"
+        [formControl]="searchControl"
+        [attr.disabled]="isLoading ? true : null"
+        placeholder="Filtro de búsqueda..."
+        class="search-input"
+      />
+      <span class="search-icon">🔍</span>
+    </div>
+    <div class="pagination-info">Total registros: {{ totalRecords }}</div>
+  </div>
+
+  <!-- Contenedor con Scroll Interno / Virtualizado -->
+  <div class="cards-scroll-wrapper">
+    <div class="cards-grid">
+      @for (row of data; track row['id'] || row) {
+        <lib-item-card
+          [item]="row"
+          [columns]="fields"
+          (delete)="deleteAction.emit($event)"
+          (rowDblClick)="rowDblClick.emit($event)"
+        />
+      } @empty {
+        <div class="empty-state">No se encontraron registros disponibles.</div>
+      }
+    </div>
+  </div>
+
+  <!-- Paginación Inferior -->
+  <div class="pagination-footer">
+    <button class="page-btn" (click)="cambiarPagina(currentPage - 1)" [disabled]="currentPage === 1 || isLoading">
+      Anterior
+    </button>
+    <span class="page-indicator">Página {{ currentPage }}</span>
+    <button class="page-btn" (click)="cambiarPagina(currentPage + 1)" [disabled]="isLoading">Siguiente</button>
+  </div>
+</div>
