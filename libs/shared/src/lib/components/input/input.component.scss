@@ -4,4 +4,22 @@
 
 .mat-mdc-form-field {
   width: 100%;
+
+  /* Configuración de bordes y estado por defecto */
+  --mdc-outlined-text-field-outline-color: #d1d5db;
+  --mdc-outlined-text-field-hover-outline-color: #9ca3af;
+  --mdc-outlined-text-field-outline-width: 1px;
+
+  /* Resaltado del borde al hacer FOCUS utilizando el color primario del tema (o un color personalizado como respaldo) */
+  --mdc-outlined-text-field-focus-outline-color: var(--mat-sys-primary, #3b82f6);
+  --mdc-outlined-text-field-focus-outline-width: 2px;
+
+  /* Redondeo de los bordes para igualar al diseño de la imagen */
+  --mdc-outlined-text-field-container-shape: 8px;
+}
+
+/* Ajuste opcional del padding interno del contenedor para replicar la comodidad visual del diseño */
+::ng-deep .mat-mdc-text-field-wrapper.mdc-text-field--outlined {
+  padding-left: 14px;
+  padding-right: 14px;
 }

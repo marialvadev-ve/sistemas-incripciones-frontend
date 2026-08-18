@@ -2,6 +2,9 @@
 @use '@angular/material' as mat;
 @use 'theme/snackbars';
 
+// Las importaciones de CSS externo deben ir DESPUÉS de los @use
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+
 html {
   height: 100%;
   @include mat.theme(
@@ -25,6 +28,7 @@ html {
   --secondary-color: #007acc;
   --text-on-primary: #ffffff;
 }
+
 *,
 *::before,
 *::after {
@@ -32,6 +36,7 @@ html {
   margin: 0;
   padding: 0;
 }
+
 body {
   color-scheme: light;
   background-color: var(--mat-sys-surface);

@@ -6,6 +6,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 
+export type MatAppearance = 'fill' | 'outline';
+
 @Component({
   selector: 'lib-input',
   standalone: true,
@@ -34,6 +36,7 @@ export class InputComponent implements ControlValueAccessor {
   readonly type = input<string>('text');
   readonly placeholder = input<string>('');
   readonly readonly = input<boolean>(false);
+  inputAppearance = input<MatAppearance>('fill');
 
   protected readonly value = signal<string>('');
   protected readonly isDisabled = signal<boolean>(false);

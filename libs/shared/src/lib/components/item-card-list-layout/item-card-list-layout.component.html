@@ -33,7 +33,7 @@
   <!-- Contenedor con Scroll Interno / Virtualizado -->
   <div class="cards-scroll-wrapper">
     <div class="cards-grid">
-      @for (row of data; track row['id'] || row) {
+      @for (row of data; track row.id) {
         <lib-item-card
           [item]="row"
           [columns]="fields"

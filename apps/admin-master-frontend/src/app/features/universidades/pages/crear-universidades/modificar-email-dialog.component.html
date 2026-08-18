@@ -1,0 +1,24 @@
+<div class="modal-card-container">
+  <!-- Botón de Cerrar superior derecho con el mismo estilo que el formulario -->
+  <button class="btn-close-form" (click)="cerrar()" title="Cerrar">✕</button>
+
+  <div class="form-header">
+    <h2>Modificar email</h2>
+    <p class="form-subtitle">Actualice el correo del usuario administrador</p>
+  </div>
+
+  <form [formGroup]="form" (ngSubmit)="guardar()" class="institutional-form">
+    <lib-input
+      formControlName="nuevoCorreo"
+      label="Nuevo correo electrónico"
+      type="email"
+      placeholder="nuevo.usuario@universidad.edu.ve"
+    >
+    </lib-input>
+    <lib-form-error [control]="form.get('nuevoCorreo')"></lib-form-error>
+
+    <div class="modal-actions">
+      <button type="submit" class="btn-submit" [disabled]="form.invalid">Guardar</button>
+    </div>
+  </form>
+</div>

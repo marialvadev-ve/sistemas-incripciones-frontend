@@ -1,10 +1,11 @@
-import { Component, ChangeDetectionStrategy, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Identifiable } from '../../models/identifiable/identifiable.model';
 
-export interface TableColumn<T = Record<string, unknown>> {
-  key: keyof T | string;
+export interface TableColumn<T> {
+  key: keyof T;
   label: string;
-  format?: (value: unknown, row: T) => string;
+  format?: (value: unknown, row: T) => unknown;
 }
 
 @Component({
@@ -13,45 +14,67 @@ export interface TableColumn<T = Record<string, unknown>> {
   imports: [CommonModule],
   templateUrl: './item-card.component.html',
   styleUrls: ['./item-card.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ItemCardComponent<T extends Record<string, unknown> = Record<string, unknown>> {
-  @Input() item!: T;
-  @Input() columns: TableColumn<T>[] = [];
+export class ItemCardComponent<T extends Identifiable> {
+  @Input({ required: true }) item!: T;
+  @Input({ required: true }) columns: TableColumn<T>[] = [];
 
-  @Output() edit = new EventEmitter<T>();
   @Output() delete = new EventEmitter<T>();
   @Output() rowDblClick = new EventEmitter<T>();
 
-  getAvatarColor(): string {
-    return (this.item['avatarColor'] as string) || '#2563eb';
+  // Conversión segura del item a un record indexable sin usar 'any'
+  private getItemAsRecord(): Record<string, unknown> {
+    return this.item as unknown as Record<string, unknown>;
   }
 
-  getSiglas(): string {
-    const siglas = this.item['siglas'] as string;
-    const nombre = this.item['nombre'] as string;
-    if (siglas) return siglas.charAt(0);
-    if (nombre) return nombre.charAt(0);
-    return 'U';
+  // Métodos seguros para soporte de logo opcional sin afectar el tipado estricto
+  hasLogo(): boolean {
+    const record = this.getItemAsRecord();
+    return !!record['logo'] && typeof record['logo'] === 'string';
   }
 
-  getDisplaySiglas(): string {
-    return (this.item['siglas'] as string) || 'REG';
+  getLogo(): string {
+    const record = this.getItemAsRecord();
+    return (record['logo'] as string) || '';
   }
 
   getNombreCard(): string {
-    const nombre = this.item['nombre'] as string;
-    if (nombre) return nombre;
-    const primeraColumna = this.columns[0]?.key as string;
-    return primeraColumna ? String(this.item[primeraColumna] ?? '') : '';
+    if (!this.columns || this.columns.length === 0) {
+      return '';
+    }
+    const primeraCol = this.columns[0].key;
+    const record = this.getItemAsRecord();
+    const value = record[String(primeraCol)];
+
+    return value !== null && value !== undefined ? String(value) : '';
+  }
+
+  getSiglas(): string {
+    const record = this.getItemAsRecord();
+    if ('siglas' in record && typeof record['siglas'] === 'string') {
+      return record['siglas'];
+    }
+    const nombre = this.getNombreCard();
+    return nombre ? nombre.substring(0, 2).toUpperCase() : 'SN';
+  }
+
+  getDisplaySiglas(): string {
+    return this.getSiglas();
+  }
+
+  getAvatarColor(): string {
+    // Color de respaldo consistente para el avatar
+    return '#3b82f6';
   }
 
   formatCell(col: TableColumn<T>): unknown {
-    const value = this.item[col.key as string];
+    const record = this.getItemAsRecord();
+    const value = record[String(col.key)];
+
     if (col.format) {
       return col.format(value, this.item);
     }
-    return value ?? '—';
+    return value ?? '';
   }
 
   onDelete(event: Event): void {

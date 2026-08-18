@@ -7,6 +7,6 @@
     "inlineSources": true,
     "types": []
   },
-  "include": ["src/**/*.ts"],
+  "include": ["src/**/*.ts", "../shared/src/lib/models/custom/entity-state.ts"],
   "exclude": ["src/**/*.spec.ts", "src/**/*.test.ts", "jest.config.ts", "jest.config.cts", "src/test-setup.ts"]
 }

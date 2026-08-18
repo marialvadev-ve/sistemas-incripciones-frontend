@@ -1,8 +1,15 @@
-import { Component, ChangeDetectionStrategy, signal, inject } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router, RouterOutlet } from '@angular/router';
-import { DataTableLayoutComponent, TableColumn } from '@sistema-inscripciones-frontend/shared';
+import { ActivatedRoute, Router, RouterOutlet } from '@angular/router';
 import { OnboardingUniversidad } from '../../models/onboarding-universidad';
+import {
+  CustomDialogConfirmComponent,
+  DataTableLayoutComponent,
+  NotificationService,
+  TableColumn,
+} from '@sistema-inscripciones-frontend/shared';
+import { UniversidadStateService } from '../../services/universidad-state.service';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-gestion-universidades',
@@ -10,62 +17,55 @@ import { OnboardingUniversidad } from '../../models/onboarding-universidad';
   imports: [CommonModule, RouterOutlet, DataTableLayoutComponent],
   templateUrl: './gestion-universidades.component.html',
   styleUrls: ['./gestion-universidades.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class GestionUniversidadesComponent {
-  private router = inject(Router);
+export class GestionUniversidadesComponent implements OnInit {
+  private readonly router = inject(Router);
+  private readonly route = inject(ActivatedRoute);
+  readonly dialog = inject(MatDialog);
+  private stateService = inject(UniversidadStateService);
+  private notification = inject(NotificationService);
+  // Signal fuertemente tipada para la data
+  universidades = this.stateService.universidades;
 
-  // Columnas dinámicas para la tabla reutilizable
-  columnas: TableColumn[] = [
+  // Columnas tipadas explícitamente para OnboardingUniversidad
+  columnas: TableColumn<OnboardingUniversidad>[] = [
     { key: 'nombre', label: 'Nombre' },
     { key: 'siglas', label: 'Siglas' },
-    { key: 'telefono', label: 'Teléfono' },
-    { key: 'correoInstitucional', label: 'Correo Inst.' },
-    { key: 'adminEmail', label: 'Admin Email' },
+    { key: 'adminEmail', label: 'Email Admin' },
   ];
 
-  // Mock de datos (aquí conectarías tu servicio real)
-  universidades = signal([
-    {
-      id: '1',
-      nombre: 'Universidad Politécnica Territorial',
-      siglas: 'UPT',
-      telefono: '0251-4445566',
-      correoInstitucional: 'info@upt.edu.ve',
-      adminEmail: 'admin@upt.edu.ve',
-      avatarColor: '#0ea5e9',
-    },
-    {
-      id: '2',
-      nombre: 'Universidad Centroccidental',
-      siglas: 'UCLA',
-      telefono: '0251-9988776',
-      correoInstitucional: 'contacto@ucla.edu.ve',
-      adminEmail: 'rectorado@ucla.edu.ve',
-      avatarColor: '#8b5cf6',
-    },
-  ]);
+  currentPage = signal<number>(1);
+  leftPanelWidth = signal<number>(60); // Ancho inicial del panel izquierdo en porcentaje (%)
 
-  isLoading = signal(false);
-  currentPage = signal(1);
+  // Estado interno para el control del resizer
+  private isResizing = false;
 
-  // Control para el ancho dinámico del panel izquierdo (Resizable Split)
-  leftPanelWidth = signal(45); // Porcentaje inicial del panel izquierdo (Formulario)
-  isResizing = false;
+  ngOnInit(): void {
+    this.stateService.cargarUniversidades();
+  }
 
-  // Manejador para redimensionar con el mouse
+  // --- LÓGICA DEL RESIZER ---
+
   startResizing(event: MouseEvent): void {
-    this.isResizing = true;
     event.preventDefault();
+    this.isResizing = true;
   }
 
   onResize(event: MouseEvent): void {
-    if (!this.isResizing) return;
+    if (!this.isResizing) {
+      return;
+    }
+
     const containerWidth = window.innerWidth;
+    if (containerWidth === 0) {
+      return;
+    }
+
+    // Calcular el nuevo porcentaje basado en la posición horizontal del mouse
     const newWidthPercentage = (event.clientX / containerWidth) * 100;
 
-    // Limitar entre 25% y 75% para evitar colapsos visuales
-    if (newWidthPercentage >= 25 && newWidthPercentage <= 75) {
+    // Establecer límites de seguridad (por ejemplo, mínimo 20%, máximo 80%)
+    if (newWidthPercentage >= 20 && newWidthPercentage <= 80) {
       this.leftPanelWidth.set(newWidthPercentage);
     }
   }
@@ -74,28 +74,47 @@ export class GestionUniversidadesComponent {
     this.isResizing = false;
   }
 
-  // Eventos de Navegación y Acciones
+  // --- EVENT HANDLERS DE NEGOCIO ---
+  editarUniversidad(univ: OnboardingUniversidad): void {
+    this.router.navigate(['editar', univ.id], { relativeTo: this.route });
+  }
+
+  eliminarUniversidad(universidad: OnboardingUniversidad): void {
+    this.opendialog(universidad);
+  }
+
+  opendialog(universidad: OnboardingUniversidad) {
+    const dialogRef = this.dialog.open(CustomDialogConfirmComponent, {
+      width: '400px',
+      data: {
+        title: 'Eliminar Registro',
+        message: `Seguro que desea eliminar la ${universidad.nombre}?`,
+        type: 'danger', // Tipo confirmación
+        confirmText: 'Eliminar',
+        cancelText: 'Cancelar',
+      },
+    });
+
+    dialogRef.afterClosed().subscribe((result: boolean) => {
+      if (result) {
+        this.stateService.eliminarUniversidad(universidad.id).subscribe({
+          next: () => {
+            this.notification.success(`La universidad ${universidad.nombre} fue eliminada con éxito.`);
+          },
+          error: (err) => {
+            this.notification.error(err.message || 'Ocurrió un error al intentar eliminar la universidad.');
+          },
+        });
+      }
+    });
+  }
+
   irCrear(): void {
-    this.router.navigate(['/universidades/crear']);
+    this.router.navigate(['crear'], { relativeTo: this.route });
   }
 
-  editarUniversidad(row: OnboardingUniversidad): void {
-    this.router.navigate([`/universidades/editar`, row.id]);
-  }
-
-  eliminarUniversidad(row: OnboardingUniversidad): void {
-    const confirmar = window.confirm(`¿Estás segura de eliminar la universidad ${row.nombre}?`);
-    if (confirmar) {
-      this.isLoading.set(true);
-      // Simulación de llamada a endpoint de eliminación
-      setTimeout(() => {
-        this.universidades.update((list) => list.filter((item) => item.id !== row.id));
-        this.isLoading.set(false);
-      }, 600);
-    }
-  }
-
-  onSearch(termino: string): void {
-    console.log('Buscando:', termino);
+  onSearch(query: string): void {
+    console.log('Filtro de búsqueda aplicado:', query);
+    // TODO: Implementar filtrado de registros
   }
 }

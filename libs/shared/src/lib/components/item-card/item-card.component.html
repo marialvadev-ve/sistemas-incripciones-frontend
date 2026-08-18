@@ -5,7 +5,6 @@
   role="region"
   aria-label="Detalle del registro"
 >
-  <!-- Avatar Circular y Siglas (Con soporte de accesibilidad a11y) -->
   <div
     class="card-left"
     tabindex="0"
@@ -14,13 +13,16 @@
     (click)="onDelete($event)"
     (keyup.enter)="onDelete($event)"
   >
-    <div class="circle-avatar" [style.background-color]="getAvatarColor()">
-      {{ getSiglas() }}
+    <div class="circle-avatar" [style.background-color]="hasLogo() ? 'transparent' : getAvatarColor()">
+      @if (hasLogo()) {
+        <img [src]="getLogo()" alt="Logo institucional" class="avatar-img" />
+      } @else {
+        {{ getSiglas() }}
+      }
     </div>
     <span class="card-siglas">{{ getDisplaySiglas() }}</span>
   </div>
 
-  <!-- Información Detallada Dinámica -->
   <div class="card-right">
     <h3 class="card-title">{{ getNombreCard() }}</h3>
     @for (col of columns.slice(1); track col.key) {

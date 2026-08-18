@@ -1,27 +1,43 @@
-<mat-form-field appearance="outline" class="w-full" subscriptSizing="dynamic">
+<mat-form-field [appearance]="inputAppearance()" class="w-full" subscriptSizing="dynamic">
   <mat-label>{{ label() }}</mat-label>
-  <input
-    matInput
-    [type]="inputType()"
-    [placeholder]="placeholder()"
-    [value]="value()"
-    [disabled]="isDisabled()"
-    [readonly]="readonly()"
-    (input)="onValueChange($event)"
-    (change)="onValueChange($event)"
-    (blur)="onValueChange($event)"
-  />
+  @if (type() !== 'textarea') {
+    <input
+      matInput
+      autocomplete="off"
+      [type]="inputType()"
+      [placeholder]="placeholder()"
+      [value]="value()"
+      [disabled]="isDisabled()"
+      [readonly]="readonly()"
+      (input)="onValueChange($event)"
+      (change)="onValueChange($event)"
+      (blur)="onValueChange($event)"
+    />
 
-  @if (type() === 'password') {
-    <button
-      mat-icon-button
-      matSuffix
-      type="button"
-      (click)="togglePasswordVisibility()"
-      [attr.aria-label]="'Ocultar/Mostrar contraseña'"
-      [attr.aria-pressed]="!hidePassword()"
+    @if (type() === 'password') {
+      <button
+        mat-icon-button
+        matSuffix
+        type="button"
+        (click)="togglePasswordVisibility()"
+        [attr.aria-label]="'Ocultar/Mostrar contraseña'"
+        [attr.aria-pressed]="!hidePassword()"
+      >
+        <mat-icon>{{ hidePassword() ? 'visibility_off' : 'visibility' }}</mat-icon>
+      </button>
+    }
+  } @else {
+    <textarea
+      matInput
+      autocomplete="off"
+      [placeholder]="placeholder()"
+      [value]="value()"
+      [disabled]="isDisabled()"
+      [readonly]="readonly()"
+      (input)="onValueChange($event)"
+      (change)="onValueChange($event)"
+      (blur)="onValueChange($event)"
     >
-      <mat-icon>{{ hidePassword() ? 'visibility_off' : 'visibility' }}</mat-icon>
-    </button>
+    </textarea>
   }
 </mat-form-field>

@@ -2,13 +2,17 @@ export interface ApiResponse<T> {
   statusCode: number;
   message: string;
   data: T;
-  success?: boolean;
+  isSuccess?: boolean;
 }
 
 export interface ApiErrorResponse {
-  statusCode: number;
+  isSuccess?: boolean;
+  statusCode?: number;
   message: string | string[];
-  error: string;
-  timestamp: string;
-  path: string;
+  error?: string;
+  timestamp?: string;
+  path?: string;
+  errors?: {
+    detalle?: string[];
+  };
 }

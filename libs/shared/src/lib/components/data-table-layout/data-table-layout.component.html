@@ -28,7 +28,8 @@
         </tr>
       </thead>
       <tbody>
-        @for (row of data; track row['id'] || row) {
+        <!-- FIX: Se cambió track row['id'] || row por track row.id -->
+        @for (row of data; track row.id) {
           <tr (dblclick)="rowDblClick.emit(row)">
             @for (col of columns; track col.key) {
               <td>{{ formatCell(col, row) }}</td>
@@ -51,7 +52,8 @@
 
   <!-- VISTA MÓVIL Y TABLET: Cards Adaptativas -->
   <div class="cards-responsive-container">
-    @for (row of data; track row['id'] || row) {
+    <!-- FIX: Se aplicó también el track row.id en la vista móvil -->
+    @for (row of data; track row.id) {
       <lib-item-card
         [item]="row"
         [columns]="columns"

@@ -4,8 +4,10 @@
   border-radius: 16px;
   padding: 2.5rem 2rem 2rem 2rem;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
-  max-width: 520px;
-  width: 100%;
+
+  /* ANCHO FIJO ESTRICTO */
+  width: 580px;
+  max-width: 100%; // Se adapta en pantallas pequeñas, pero en escritorio siempre será 620px
   box-sizing: border-box;
 
   /* Botón de cierre elegante y bien ubicado en la esquina superior derecha */
@@ -56,6 +58,8 @@
     display: flex;
     flex-direction: column;
     gap: 1.25rem;
+    width: 100%;
+    box-sizing: border-box;
 
     .form-group {
       display: flex;
@@ -112,6 +116,61 @@
         background-color: #93c5fd;
         cursor: not-allowed;
       }
+    }
+  }
+
+  /* Contenedor Grid estricto para que el ancho nunca varíe entre crear y editar */
+  /* Contenedor Grid estricto para que el ancho nunca varíe entre crear y editar */
+  .input-with-action-container {
+    display: grid;
+    grid-template-columns: 1fr 44px; // 1fr para el input y 44px exactos para el botón/placeholder
+    gap: 0.75rem;
+    align-items: flex-end;
+    width: 100%;
+    box-sizing: border-box;
+
+    .input-wrapper {
+      width: 100%;
+      min-width: 0; // Previene desbordamientos en elementos grid/flex
+    }
+
+    /* Botón circular de edición */
+    .btn-circular-edit {
+      background-color: #2563eb;
+      color: #ffffff;
+      border: none;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.35);
+      transition: all 0.2s ease;
+      margin-bottom: 2px; // Alineación fina con la base del input
+
+      mat-icon {
+        font-size: 20px;
+        width: 20px;
+        height: 20px;
+      }
+
+      &:hover {
+        background-color: #1d4ed8;
+        transform: scale(1.05);
+        box-shadow: 0 6px 16px rgba(37, 99, 235, 0.45);
+      }
+    }
+
+    /* Placeholder invisible con la misma sombra para conservar idéntica métrica visual */
+    .btn-circular-placeholder {
+      width: 44px;
+      height: 44px;
+      visibility: hidden;
+      margin-bottom: 2px;
+      /* CLAVE: Sombra transparente idéntica para igualar el espacio de renderizado y evitar saltos visuales */
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0);
     }
   }
 }

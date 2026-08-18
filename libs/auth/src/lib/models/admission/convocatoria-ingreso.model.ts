@@ -1,4 +1,4 @@
-import { Universidad } from '../university/universidad.model';
+import { Universidad } from '../../../../../shared/src/lib/models/university/universidad.model';
 
 export interface ConvocatoriaIngreso {
   id: string;

@@ -16,17 +16,17 @@ export * from './lib/models/geographic/estado.model';
 export * from './lib/models/geographic/municipio.model';
 export * from './lib/models/geographic/parroquia.model';
 export * from './lib/models/persona/persona.model';
-export * from './lib/models/university/universidad.model';
 
 /** componentes */
 
 export * from './lib/pages/login/login';
 export * from './lib/pages/recover-password/recover-password';
+export * from './lib/pages/verificar-correo/verificar-correo.component';
+export * from './lib/pages/establecer-password/establecer-password.component';
 
 /*** SERVICES ***/
 export * from './lib/services/auth.service';
 export * from './lib/store/auth.store';
 
 /*** GUARDS */
-
 export * from './lib/guards/auth-guard';

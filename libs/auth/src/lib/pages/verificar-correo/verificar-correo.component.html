@@ -1,0 +1,85 @@
+<div class="auth-wrapper">
+  <!-- Panel Institucional Izquierdo (Reutiliza el diseño base) -->
+  <div class="institutional-panel">
+    <div class="institutional-content">
+      <div class="brand-badge">
+        <mat-icon class="brand-icon">verified_user</mat-icon>
+        <span>Sistema de Inscripciones</span>
+      </div>
+      <h1>Validación de identidad institucional</h1>
+      <p>Verificamos y garantizamos la seguridad en el acceso al sistema de gestión universitaria.</p>
+    </div>
+    <div class="geometric-art">
+      <div class="orbit orbit-1"></div>
+      <div class="orbit orbit-2"></div>
+      <div class="institutional-seal-card">
+        <mat-icon class="seal-icon">security</mat-icon>
+        <span>Plataforma Segura</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Panel Derecho con el Estado de Verificación -->
+  <div class="form-panel">
+    <div class="form-container">
+      @switch (state()) {
+        @case ('loading') {
+          <div class="state-box animate-fade">
+            <mat-spinner diameter="48" strokeWidth="4"></mat-spinner>
+            <h2>Verificando tu correo...</h2>
+            <p>Por favor espera un momento mientras validamos tus credenciales.</p>
+          </div>
+        }
+
+        @case ('success') {
+          <div class="state-box animate-fade">
+            <div class="icon-badge success">
+              <mat-icon>check_circle</mat-icon>
+            </div>
+            <h2>¡Tu correo fue verificado!</h2>
+            <p>Tu cuenta ha sido activada correctamente en la plataforma.</p>
+            <a mat-flat-button color="primary" routerLink="/auth/login" class="w-full-btn"> Iniciar sesión </a>
+          </div>
+        }
+
+        @case ('error-404') {
+          <div class="state-box animate-fade">
+            <div class="icon-badge error">
+              <mat-icon>error_outline</mat-icon>
+            </div>
+            <h2>Enlace no válido</h2>
+            <p>{{ errorMessage() }}</p>
+            <a mat-stroked-button color="primary" routerLink="/auth/login" class="w-full-btn"> Ir al inicio </a>
+          </div>
+        }
+
+        @case ('error-410') {
+          <div class="state-box animate-fade">
+            <div class="icon-badge warning">
+              <mat-icon>history_toggle_off</mat-icon>
+            </div>
+            <h2>Enlace expirado</h2>
+            <p>{{ errorMessage() }}</p>
+            <div class="actions-stack">
+              <button mat-flat-button color="primary" (click)="reenviarCorreo()" class="w-full-btn">
+                Reenviar correo
+              </button>
+              <a mat-stroked-button routerLink="/auth/login" class="w-full-btn"> Iniciar sesión </a>
+            </div>
+          </div>
+        }
+
+        @default {
+          <div class="state-box animate-fade">
+            <div class="icon-badge error">
+              <mat-icon>warning</mat-icon>
+            </div>
+            <h2>Algo salió mal</h2>
+            <p>{{ errorMessage() }}</p>
+            <a mat-flat-button color="primary" routerLink="/auth/login" class="w-full-btn"> Volver al inicio </a>
+          </div>
+        }
+      }
+    </div>
+  </div>
+</div>

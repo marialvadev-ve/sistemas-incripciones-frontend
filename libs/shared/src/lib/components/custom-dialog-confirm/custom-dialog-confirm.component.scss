@@ -1,0 +1,41 @@
+.dialog-title-container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0;
+  padding: 20px 24px 10px;
+
+  mat-icon {
+    font-size: 28px !important;
+    width: 28px !important;
+    height: 28px !important;
+  }
+}
+
+.dialog-content {
+  padding: 10px 24px 20px !important;
+  font-size: 1rem;
+  color: #334155;
+
+  .message {
+    text-align: center;
+  }
+}
+
+.dialog-actions {
+  padding: 8px 24px 16px !important;
+  gap: 8px;
+}
+
+/* Colores semánticos institucionales para los iconos */
+.text-warning {
+  color: #f59e0b; /* Ámbar / Amarillo de Advertencia */
+}
+
+.text-danger {
+  color: #ef4444; /* Rojo de Peligro / Eliminar */
+}
+
+.text-primary {
+  color: #3b82f6; /* Azul de Confirmación General */
+}
